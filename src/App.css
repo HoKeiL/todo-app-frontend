@@ -1,12 +1,12 @@
-body{
-    background:#232D42;
-    color: #fbf9f9;
+body {
+  background: #232d42;
+  color: #fbf9f9;
 }
-.button{
-    background: #FFC148;
-    color:#6969DE;
+.button {
+  background: #ffc148;
+  color: #6969de;
 }
 
-.button:hover{
-    cursor: pointer;
+.button:hover {
+  cursor: pointer;
 }
