@@ -1,0 +1,12 @@
+body{
+    background:#232D42;
+    color: #fbf9f9;
+}
+.button{
+    background: #FFC148;
+    color:#6969DE;
+}
+
+.button:hover{
+    cursor: pointer;
+}
