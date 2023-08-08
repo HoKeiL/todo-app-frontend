@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import moment from "moment";
+import baseUrl from "./utils/environmentVariables";
 import { todoList } from "./coponents/todoAppTitle";
 import { todoInput } from "./coponents/todoInput";
 import "./App.css";
@@ -10,7 +12,9 @@ function App(): JSX.Element {
     // try... catch documentation:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch
     try {
-      const res = await fetch(`https://hokeil-todo-app.onrender.com${endpoint}`);
+      const res = await fetch(
+        `https://hokeil-todo-app.onrender.com${endpoint}`
+      );
       const body = await res.json();
       setMessage(body.message);
     } catch (err) {
@@ -35,14 +39,12 @@ function App(): JSX.Element {
         {isFirstLoad && <p>Loading...</p>}
         {message && <p>{message}</p>}
       </div>
-      
-      <div className="inputBarSection">
-        {todoInput()}
-      </div>
+
+      <div className="inputBarSection">{todoInput()}</div>
 
       <div className="container">
         <div className="calendar">
-        <p>calendar goes here</p>
+          <p>calendar goes here</p>
         </div>
 
         <div className="doneThisMonth">
