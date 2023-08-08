@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+body {
+  background: #232d42;
+  color: #fbf9f9;
+  font-family: "Poppins", sans-serif;
+}
+
+.title {
+  /* border: 3px solid #fbf9f9; */
+  font-weight: bold;
+  text-align: center;
+}
+.inputBarSection {
+  /* border: 3px solid #fbf9f9; */
+  width: 55%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.due-date-text {
+  margin-left: 16px;
+  display: inline-block;
+  text-align: right;
+}
+
+.due-date {
+  display: inline-block;
+  margin-left: 8px;
+  border-radius: 4px;
+}
+.button {
+  display: inline-block;
+  text-align: right;
+  margin-left: 16px;
+  border-radius: 4px;
+  background: #ffc148;
+  color: #232d42;
+}
+.inputBar {
+  display: inline-block;
+  border-radius: 4px;
+  border: #fbf9f9;
+  padding-left: 8px;
+  margin-left: 16px;
+}
+
+.container {
+  /* border: 3px solid #fbf9f9; */
+  padding: 8px;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: 160px 400px 240px;
+  grid-template-rows: 150px 150px 150px;
+  gap: 8px;
+  grid-template-areas:
+    "filterOptions toDoMainList calendar "
+    "filterOptions toDoMainList doneThisMonth "
+    "filterOptions toDoMainList doneThisMonth";
+}
+
+.filterOptions {
+  border: 3px solid #fbf9f9;
+  text-align: center;
+  display: grid;
+  grid-area: filterOptions;
+}
+.toDoMainList {
+  border: 3px solid #fbf9f9;
+  text-align: center;
+  display: grid;
+  grid-area: toDoMainList;
+}
+.calendar {
+  border: 3px solid #fbf9f9;
+  text-align: center;
+  display: grid;
+  grid-area: calendar;
+}
+.doneThisMonth {
+  border: 3px solid #fbf9f9;
+  text-align: center;
+  display: grid;
+  grid-area: doneThisMonth;
+}
+
+.button:hover {
+  cursor: pointer;
+}
