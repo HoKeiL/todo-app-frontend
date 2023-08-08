@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import moment from "moment";
-import baseUrl from "./utils/environmentVariables";
+// import moment from "moment";
+// import baseUrl from "./utils/environmentVariables";
 import { todoList } from "./coponents/todoAppTitle";
 import { todoInput } from "./coponents/todoInput";
 import "./App.css";
