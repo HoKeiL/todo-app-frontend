@@ -86,3 +86,7 @@ body {
 .button:hover {
   cursor: pointer;
 }
+
+.due-date:hover {
+  cursor: pointer;
+}

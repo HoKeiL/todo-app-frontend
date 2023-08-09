@@ -1,43 +1,18 @@
 import { useEffect, useState } from "react";
-// import moment from "moment";
+import moment from "moment";
 // import baseUrl from "./utils/environmentVariables";
 import { todoList } from "./coponents/todoAppTitle";
 import { todoInput } from "./coponents/todoInput";
 import "./App.css";
 
 function App(): JSX.Element {
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const [message, setMessage] = useState<string>();
-  const loadDataFromEndpoint = async (endpoint: `/${string}`) => {
-    // try... catch documentation:
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch
-    try {
-      const res = await fetch(
-        `https://hokeil-todo-app.onrender.com${endpoint}`
-      );
-      const body = await res.json();
-      setMessage(body.message);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    // safe to ignore exhaustive deps warning as we're _not_ triggering infinite updates, since our setState is conditional and not executed on all rerenders after the first one
-    if (isFirstLoad) {
-      // populate data on first load
-      loadDataFromEndpoint("/todoapp");
-      setIsFirstLoad(false);
-    }
-  });
+ 
 
   return (
     <>
       <div>
         <h1 className="title">{todoList("My ToDo App")}</h1>
-        {isFirstLoad && <p>Loading...</p>}
-        {message && <p>{message}</p>}
+
       </div>
 
       <div className="inputBarSection">{todoInput()}</div>
