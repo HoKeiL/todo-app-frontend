@@ -2,7 +2,7 @@ export interface todoCardProp {
     id: number;
     task: string;
     dueDate: string;
-    status: boolean;
+    done: boolean;
 }
 
 interface ToDoViewProp {
@@ -16,11 +16,14 @@ export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
     }
 
     return (
-        <div className="toDotask">
-            <h1>Task: {props.todo.task}</h1>
-            <input type="radio" className="isDone" value="Done" />
-            <hr></hr>
-            <p>Due date: {props.todo.dueDate}</p>
+        <div className="todoTask">
+            <h3 className="taskDescription">Task: {props.todo.task}</h3>
+            <div className="isDoneGroup" >
+                <p className="isDone" >Done</p>
+                <input type="checkbox" className="isDoneButton" value='false' />
+            </div>
+            <hr className="divider"></hr>
+            <h4 className="taskdueDate">Due date: {props.todo.dueDate}</h4>
             <button type="button" className="bin" onClick={handleClick}> bin </button>
         </div>
     )
