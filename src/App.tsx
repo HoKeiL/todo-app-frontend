@@ -16,10 +16,6 @@ function App(): JSX.Element {
   const [ToDoIsDone, setToDoIsDone] = useState<todoCardProp[]>([]);
 
 
-
-
-
-
   const loadDataFromEndpoint = async (endpoint: `/todoapp`) => {
     try {
       const res = await fetch(`http://localhost:4000${endpoint}`);
@@ -57,21 +53,21 @@ function App(): JSX.Element {
   function todoInput(): JSX.Element {
 
     async function handleAddNewTask() {
+      if (NewTask.length === 0 || DueDate.length === 0) {
+        alert('please enter both task and duedate!')
+      } else {
+        const response = await axios.post('http://localhost:4000/todoapp', {
+          task: NewTask,
+          dueDate: DueDate,
+          status: "InProgress"
+        })
+        console.log(response.data);
+      }
 
-      axios.post('http://localhost:4000/todoapp', {
-        task: NewTask,
-        dueDate: DueDate,
-        status: "InProgress"
-      })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-      fetchAllTodos()
-      setNewTask('')
-      setDueDate('')
+
+      fetchAllTodos();
+      setNewTask('');
+      setDueDate('');
     }
 
     const today = moment(new Date()).format("YYYY-MM-DD");
@@ -85,21 +81,22 @@ function App(): JSX.Element {
     );
   }
 
-
   function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
-    const [isDone, setIsDone] = useState<boolean>(false)
+    const [isDone, setIsDone] = useState<boolean>()
 
     async function handleDoneCheckbox() {
-      const isChecked = !isDone;
-      setIsDone(isChecked)
       const todoId = props.todo.id;
-      if (isChecked === true) {
-        props.todo["status"] = "Done"
+      if (props.todo.status === "InProgress") {
+        props.todo["status"] = "Done";
+        setIsDone(true)
 
-      } else { props.todo["status"] = "InProgress" }
+      } else {
+        props.todo["status"] = "InProgress";
+        setIsDone(false)
+      }
 
       const response = await axios.patch(`http://localhost:4000/todoapp/${todoId}`, { status: props.todo.status })
-      console.log(response.data + "has been updated to " + props.todo.status)
+      console.log(response.data + "ID:" + todoId + " has been updated to " + props.todo.status)
 
       fetchAllTodos();
     }
@@ -137,12 +134,14 @@ function App(): JSX.Element {
         {todoInput()}
       </div>
       <div className="container">
-        <div className="toDoMainList">
+        <div className="inProgressList">
+          <h2 className="inProgressTitle">-- In Progress tasks --</h2>
           {TodosInProgress.map((e) => (
             <DisplayTodoTask todo={e} key={e.id} />
           ))}
         </div>
-        <div className="done">
+        <div className="doneList">
+          <h2 className="doneTitle">-- Done tasks --</h2>
           {ToDoIsDone.map((e) => (
             <DisplayTodoTask todo={e} key={e.id} />
           ))}
