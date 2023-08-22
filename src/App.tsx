@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
+import { baseUrl } from "./utils/baseUrl"
 // import { DisplayTodoTask } from "./coponents/todoTaskCard";
 import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
 import "./App.css";
 
-export const apiBaseURL = process.env.REACT_APP_API_BASE;
 
 function App(): JSX.Element {
   const [message, setMessage] = useState<string>();
@@ -16,7 +16,7 @@ function App(): JSX.Element {
 
   async function fetchAllTodos(endpoint: string) {
     try {
-      const response = await axios.get(apiBaseURL + endpoint);
+      const response = await axios.get(`${baseUrl}${endpoint}`);
       const todos = await response.data;
       const inProgressTodos = todos.filter(
         (todo: todoCardProp) => todo.status === "InProgress"
@@ -44,7 +44,7 @@ function App(): JSX.Element {
       if (NewTask.length === 0 || DueDate.length === 0) {
         alert("please enter both task and duedate!");
       } else {
-        const response = await axios.post(apiBaseURL + "/todoapp", {
+        const response = await axios.post(baseUrl + "/todoapp", {
           task: NewTask,
           dueDate: DueDate,
           status: "InProgress",
@@ -98,15 +98,15 @@ function App(): JSX.Element {
         setIsDone(false);
       }
 
-      const response = await axios.patch(`${apiBaseURL}/todoapp/${todoId}`, {
+      const response = await axios.patch(`${baseUrl}/todoapp/${todoId}`, {
         status: props.todo.status,
       });
       console.log(
         response.data +
-          "ID:" +
-          todoId +
-          " has been updated to " +
-          props.todo.status
+        "ID:" +
+        todoId +
+        " has been updated to " +
+        props.todo.status
       );
 
       fetchAllTodos("/todoapp");
@@ -114,7 +114,7 @@ function App(): JSX.Element {
 
     async function handleDelete() {
       const todoId = props.todo.id;
-      const response = await axios.delete(`${apiBaseURL}/todoapp/${todoId}`);
+      const response = await axios.delete(`${baseUrl}/todoapp/${todoId}`);
       console.log(response.data + "ID:" + todoId + " has been deleted");
       fetchAllTodos("/todoapp");
     }
