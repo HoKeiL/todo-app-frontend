@@ -7,7 +7,6 @@ import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
 import "./App.css";
 
 function App(): JSX.Element {
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [message, setMessage] = useState<string>();
   const [NewTask, setNewTask] = useState<string>("");
   const [DueDate, setDueDate] = useState<string>("");
@@ -27,14 +26,10 @@ function App(): JSX.Element {
   };
 
   useEffect(() => {
-    // safe to ignore exhaustive deps warning as we're _not_ triggering infinite updates, since our setState is conditional and not executed on all rerenders after the first one
-    if (isFirstLoad) {
-      fetchAllTodos();
-      // populate data on first load
-      loadDataFromEndpoint("/todoapp");
-      setIsFirstLoad(false);
-    }
-  });
+    fetchAllTodos();
+    // populate data on first load
+    loadDataFromEndpoint("/todoapp");
+  }, []);
 
   async function fetchAllTodos() {
     const response = await axios.get("http://localhost:4000/todoapp");
@@ -158,7 +153,6 @@ function App(): JSX.Element {
     <>
       <div>
         <h1 className="title">My ToDo App</h1>
-        {isFirstLoad && <p>Loading...</p>}
         {message && <p>{message}</p>}
       </div>
       <div className="inputBarSection">{todoInput()}</div>
