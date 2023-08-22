@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import dotenv from "dotenv";
 // import { DisplayTodoTask } from "./coponents/todoTaskCard";
 import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
 import "./App.css";
 
 
-dotenv.config();
+const apiBaseURL = process.env.REACT_APP_API_BASE;
 
 function App(): JSX.Element {
   const [message, setMessage] = useState<string>();
@@ -18,7 +17,7 @@ function App(): JSX.Element {
 
   async function fetchAllTodos(endpoint: string) {
     try {
-      const response = await axios.get(process.env.NODE_ENV + endpoint);
+      const response = await axios.get(apiBaseURL + endpoint);
       const todos = await response.data;
       const inProgressTodos = todos.filter(
         (todo: todoCardProp) => todo.status === "InProgress"
@@ -46,7 +45,7 @@ function App(): JSX.Element {
       if (NewTask.length === 0 || DueDate.length === 0) {
         alert("please enter both task and duedate!");
       } else {
-        const response = await axios.post("http://localhost:4000/todoapp", {
+        const response = await axios.post(apiBaseURL + "/todoapp", {
           task: NewTask,
           dueDate: DueDate,
           status: "InProgress",
@@ -101,7 +100,7 @@ function App(): JSX.Element {
       }
 
       const response = await axios.patch(
-        `http://localhost:4000/todoapp/${todoId}`,
+        `${apiBaseURL}/todoapp/${todoId}`,
         { status: props.todo.status }
       );
       console.log(
@@ -118,7 +117,7 @@ function App(): JSX.Element {
     async function handleDelete() {
       const todoId = props.todo.id;
       const response = await axios.delete(
-        `http://localhost:4000/todoapp/${todoId}`
+        `${apiBaseURL}/todoapp/${todoId}`
       );
       console.log(response.data + "ID:" + todoId + " has been deleted");
       fetchAllTodos("/todoapp");
