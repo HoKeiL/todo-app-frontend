@@ -5,7 +5,7 @@ import moment from "moment";
 import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
 import "./App.css";
 
-const apiBaseURL = process.env.REACT_APP_API_BASE;
+export const apiBaseURL = process.env.REACT_APP_API_BASE;
 
 function App(): JSX.Element {
   const [message, setMessage] = useState<string>();
