@@ -87,9 +87,11 @@ body {
 .todoTask {
   /* border: 3px solid #fbf9f9; */
   border-radius: 16px;
-  background: linear-gradient(0deg,
-      rgba(251, 249, 249, 0.1) 0%,
-      rgba(251, 249, 249, 0.03) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(251, 249, 249, 0.1) 0%,
+    rgba(251, 249, 249, 0.03) 100%
+  );
   margin: 8px;
   padding: 8px;
 }
@@ -150,7 +152,6 @@ body {
   width: 40px;
   height: 24px;
 }
-
 
 footer {
   display: block;

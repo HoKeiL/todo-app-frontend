@@ -114,10 +114,10 @@ function App(): JSX.Element {
       );
       console.log(
         response.data +
-        "ID:" +
-        todoId +
-        " has been updated to " +
-        props.todo.status
+          "ID:" +
+          todoId +
+          " has been updated to " +
+          props.todo.status
       );
 
       fetchAllTodos();
