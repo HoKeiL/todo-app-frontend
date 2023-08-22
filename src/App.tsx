@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 // import { DisplayTodoTask } from "./coponents/todoTaskCard";
 import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
 import "./App.css";
+
+
+dotenv.config();
 
 function App(): JSX.Element {
   const [message, setMessage] = useState<string>();
@@ -15,7 +18,7 @@ function App(): JSX.Element {
 
   async function fetchAllTodos(endpoint: string) {
     try {
-      const response = await axios.get(`http://localhost:4000${endpoint}`);
+      const response = await axios.get(process.env.NODE_ENV + endpoint);
       const todos = await response.data;
       const inProgressTodos = todos.filter(
         (todo: todoCardProp) => todo.status === "InProgress"
@@ -103,10 +106,10 @@ function App(): JSX.Element {
       );
       console.log(
         response.data +
-          "ID:" +
-          todoId +
-          " has been updated to " +
-          props.todo.status
+        "ID:" +
+        todoId +
+        " has been updated to " +
+        props.todo.status
       );
 
       fetchAllTodos("/todoapp");
