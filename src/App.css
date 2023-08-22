@@ -76,9 +76,10 @@ body {
 }
 
 .doneTitle,
-.inProgressList {
+.inProgressTitle {
   text-align: center;
 }
+
 
 .todoTask {
   /* border: 3px solid #fbf9f9; */
@@ -86,8 +87,6 @@ body {
   background: linear-gradient(0deg, rgba(251, 249, 249, 0.10) 0%, rgba(251, 249, 249, 0.03) 100%);
   margin: 8px;
   padding: 8px;
-
-
 }
 
 .taskDescription {
