@@ -5,7 +5,6 @@ import moment from "moment";
 import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
 import "./App.css";
 
-
 const apiBaseURL = process.env.REACT_APP_API_BASE;
 
 function App(): JSX.Element {
@@ -99,16 +98,15 @@ function App(): JSX.Element {
         setIsDone(false);
       }
 
-      const response = await axios.patch(
-        `${apiBaseURL}/todoapp/${todoId}`,
-        { status: props.todo.status }
-      );
+      const response = await axios.patch(`${apiBaseURL}/todoapp/${todoId}`, {
+        status: props.todo.status,
+      });
       console.log(
         response.data +
-        "ID:" +
-        todoId +
-        " has been updated to " +
-        props.todo.status
+          "ID:" +
+          todoId +
+          " has been updated to " +
+          props.todo.status
       );
 
       fetchAllTodos("/todoapp");
@@ -116,9 +114,7 @@ function App(): JSX.Element {
 
     async function handleDelete() {
       const todoId = props.todo.id;
-      const response = await axios.delete(
-        `${apiBaseURL}/todoapp/${todoId}`
-      );
+      const response = await axios.delete(`${apiBaseURL}/todoapp/${todoId}`);
       console.log(response.data + "ID:" + todoId + " has been deleted");
       fetchAllTodos("/todoapp");
     }
