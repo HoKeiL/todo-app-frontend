@@ -134,7 +134,7 @@ function App(): JSX.Element {
 
     return (
       <div className="todoTask">
-        <h3 className="taskDescription">Task: {props.todo.task}</h3>
+        <h2 className="taskDescription">Task: {props.todo.task}</h2>
         <div className="isDoneGroup">
           <label className="isDone">Done</label>
           <input
@@ -176,7 +176,7 @@ function App(): JSX.Element {
           ))}
         </div>
       </div>
-      <div className="footer">
+      <footer className="footer">
         <p>
           My frontend repo{" "}
           <a
@@ -187,9 +187,7 @@ function App(): JSX.Element {
           >
             here
           </a>{" "}
-        </p>
-        <p>
-          My backend repo{" "}
+          and my backend repo{" "}
           <a
             className="repoLinks"
             href="https://github.com/HoKeiL/todo-app-backend"
@@ -199,7 +197,7 @@ function App(): JSX.Element {
             here
           </a>{" "}
         </p>
-      </div>
+      </footer>
     </>
   );
 }
