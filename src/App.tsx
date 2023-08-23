@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-// import dotenv from "dotenv";
+import { baseUrl } from "./utils/baseUrl";
 // import { DisplayTodoTask } from "./coponents/todoTaskCard";
 import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
 import "./App.css";
@@ -13,43 +13,37 @@ function App(): JSX.Element {
   const [TodosInProgress, setTodosInProgress] = useState<todoCardProp[]>([]);
   const [ToDoIsDone, setToDoIsDone] = useState<todoCardProp[]>([]);
 
-  const loadDataFromEndpoint = async (endpoint: `/todoapp`) => {
+  async function fetchAllTodos(endpoint: string) {
     try {
-      const res = await fetch(`http://localhost:4000${endpoint}`);
-      const body = await res.json();
-      setMessage(body.message);
+      const response = await axios.get(`${baseUrl}${endpoint}`);
+      const todos = await response.data;
+      const inProgressTodos = todos.filter(
+        (todo: todoCardProp) => todo.status === "InProgress"
+      );
+      setTodosInProgress(inProgressTodos);
+      const doneTodos = todos.filter(
+        (todo: todoCardProp) => todo.status === "Done"
+      );
+      setToDoIsDone(doneTodos);
+      setMessage(todos.message);
       console.log("fetched data");
     } catch (err) {
       console.log(err);
       setMessage(`${(err as Error).name}: ${(err as Error).message}`);
     }
-  };
+  }
 
   useEffect(() => {
-    fetchAllTodos();
     // populate data on first load
-    loadDataFromEndpoint("/todoapp");
+    fetchAllTodos("/todoapp");
   }, []);
-
-  async function fetchAllTodos() {
-    const response = await axios.get("http://localhost:4000/todoapp");
-    const todos = response.data;
-    const inProgressTodos = todos.filter(
-      (todo: todoCardProp) => todo.status === "InProgress"
-    );
-    setTodosInProgress(inProgressTodos);
-    const doneTodos = todos.filter(
-      (todo: todoCardProp) => todo.status === "Done"
-    );
-    setToDoIsDone(doneTodos);
-  }
 
   function todoInput(): JSX.Element {
     async function handleAddNewTask() {
       if (NewTask.length === 0 || DueDate.length === 0) {
         alert("please enter both task and duedate!");
       } else {
-        const response = await axios.post("http://localhost:4000/todoapp", {
+        const response = await axios.post(baseUrl + "/todoapp", {
           task: NewTask,
           dueDate: DueDate,
           status: "InProgress",
@@ -57,7 +51,7 @@ function App(): JSX.Element {
         console.log(response.data);
       }
 
-      fetchAllTodos();
+      fetchAllTodos("/todoapp");
       setNewTask("");
       setDueDate("");
     }
@@ -103,10 +97,9 @@ function App(): JSX.Element {
         setIsDone(false);
       }
 
-      const response = await axios.patch(
-        `http://localhost:4000/todoapp/${todoId}`,
-        { status: props.todo.status }
-      );
+      const response = await axios.patch(`${baseUrl}/todoapp/${todoId}`, {
+        status: props.todo.status,
+      });
       console.log(
         response.data +
           "ID:" +
@@ -115,16 +108,14 @@ function App(): JSX.Element {
           props.todo.status
       );
 
-      fetchAllTodos();
+      fetchAllTodos("/todoapp");
     }
 
     async function handleDelete() {
       const todoId = props.todo.id;
-      const response = await axios.delete(
-        `http://localhost:4000/todoapp/${todoId}`
-      );
+      const response = await axios.delete(`${baseUrl}/todoapp/${todoId}`);
       console.log(response.data + "ID:" + todoId + " has been deleted");
-      fetchAllTodos();
+      fetchAllTodos("/todoapp");
     }
 
     return (

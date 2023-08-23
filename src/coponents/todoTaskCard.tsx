@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { todoCardProp } from "./interfaces";
+import apiBaseURL from "../App";
 
 interface ToDoViewProp {
   todo: todoCardProp;
@@ -27,9 +28,7 @@ export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
 
   async function handleDelete() {
     const todoId = props.todo.id;
-    const response = await axios.delete(
-      `http://localhost:4000/todoapp/${todoId}`
-    );
+    const response = await axios.delete(`${apiBaseURL}/todoapp/${todoId}`);
     console.log(response.data + "ID:" + todoId + " has been deleted");
   }
 
