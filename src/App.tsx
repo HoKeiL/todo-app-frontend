@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import { baseUrl } from "./utils/baseUrl"
+import { baseUrl } from "./utils/baseUrl";
 // import { DisplayTodoTask } from "./coponents/todoTaskCard";
 import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
 import "./App.css";
-
 
 function App(): JSX.Element {
   const [message, setMessage] = useState<string>();
@@ -103,10 +102,10 @@ function App(): JSX.Element {
       });
       console.log(
         response.data +
-        "ID:" +
-        todoId +
-        " has been updated to " +
-        props.todo.status
+          "ID:" +
+          todoId +
+          " has been updated to " +
+          props.todo.status
       );
 
       fetchAllTodos("/todoapp");
