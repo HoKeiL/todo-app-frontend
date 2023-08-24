@@ -43,7 +43,7 @@ function App(): JSX.Element {
       if (NewTask.length === 0 || DueDate.length === 0) {
         alert("Please enter both task and duedate :)");
       } else {
-        const response = await axios.post(baseUrl + "/todoapp", {
+        const response = await axios.post(`${baseUrl}/todoapp`, {
           task: NewTask,
           duedate: DueDate,
           completed: false,
@@ -105,10 +105,10 @@ function App(): JSX.Element {
       });
       console.log(
         response.data +
-          "ID:" +
-          todoId +
-          " has been updated to " +
-          props.todo.completed
+        "ID:" +
+        todoId +
+        " has been updated to " +
+        props.todo.completed
       );
       fetchAllTodos("/todoapp");
     }
