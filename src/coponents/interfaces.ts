@@ -1,7 +1,7 @@
 export interface todoCardProp {
   id: number;
   task: string;
-  dueDate: string;
+  duedate: string;
   completed: boolean;
 }
 

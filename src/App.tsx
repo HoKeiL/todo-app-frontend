@@ -45,7 +45,7 @@ function App(): JSX.Element {
       } else {
         const response = await axios.post(baseUrl + "/todoapp", {
           task: NewTask,
-          dueDate: DueDate,
+          duedate: DueDate,
           completed: false,
         });
         console.log(response.data);
@@ -85,20 +85,18 @@ function App(): JSX.Element {
   }
 
   function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
-
-    const [isDone, setIsDone] = useState<boolean>((props.todo.completed === true) ? (true) : (false));
-
+    const [isDone, setIsDone] = useState<boolean>(
+      props.todo.completed === true ? true : false
+    );
 
     async function handleDoneCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
-      setIsDone(e.target.checked)
+      setIsDone(e.target.checked);
 
       const todoId = props.todo.id;
       if (isDone === false) {
         props.todo["completed"] = true;
-
       } else {
         props.todo["completed"] = false;
-
       }
 
       const response = await axios.patch(`${baseUrl}/todoapp/${todoId}`, {
@@ -106,10 +104,10 @@ function App(): JSX.Element {
       });
       console.log(
         response.data +
-        "ID:" +
-        todoId +
-        " has been updated to " +
-        props.todo.completed
+          "ID:" +
+          todoId +
+          " has been updated to " +
+          props.todo.completed
       );
       fetchAllTodos("/todoapp");
     }
@@ -134,8 +132,8 @@ function App(): JSX.Element {
           />
         </div>
         <hr className="divider"></hr>
-        <h4 className="taskdueDate">Due date: {props.todo.dueDate}</h4>
-        <button type="button" className="bin" onClick={handleDelete} >
+        <h4 className="taskdueDate">Due date: {props.todo.duedate}</h4>
+        <button type="button" className="bin" onClick={handleDelete}>
           {" "}
           Bin{" "}
         </button>
