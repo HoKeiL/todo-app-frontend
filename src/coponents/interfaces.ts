@@ -1,8 +1,8 @@
 export interface todoCardProp {
   id: number;
   task: string;
-  dueDate: string;
-  status: "Done" | "InProgress";
+  duedate: string;
+  completed: boolean;
 }
 
 export interface ToDoViewProp {

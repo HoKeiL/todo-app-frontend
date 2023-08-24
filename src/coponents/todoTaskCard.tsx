@@ -15,14 +15,13 @@ export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
     setIsDone(isChecked);
     const todoId = props.todo.id;
     if (isChecked === true) {
-      props.todo["status"] = "Done";
+      props.todo["completed"] = true;
     } else {
-      props.todo["status"] = "InProgress";
+      props.todo["completed"] = false;
     }
-    const response = await axios.patch(
-      `http://localhost:4000/todoapp/${todoId}`,
-      { status: props.todo.status }
-    );
+    const response = await axios.patch(`${apiBaseURL}/todoapp/${todoId}`, {
+      status: props.todo.completed,
+    });
     console.log(response.data + "has been updated");
   }
 
@@ -45,7 +44,7 @@ export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
         />
       </div>
       <hr className="divider"></hr>
-      <h4 className="taskdueDate">Due date: {props.todo.dueDate}</h4>
+      <h4 className="taskdueDate">Due date: {props.todo.duedate}</h4>
       <button type="button" className="bin" onClick={handleDelete}>
         {" "}
         bin{" "}

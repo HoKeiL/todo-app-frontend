@@ -18,11 +18,11 @@ function App(): JSX.Element {
       const response = await axios.get(`${baseUrl}${endpoint}`);
       const todos = await response.data;
       const inProgressTodos = todos.filter(
-        (todo: todoCardProp) => todo.status === "InProgress"
+        (todo: todoCardProp) => todo.completed === false
       );
       setTodosInProgress(inProgressTodos);
       const doneTodos = todos.filter(
-        (todo: todoCardProp) => todo.status === "Done"
+        (todo: todoCardProp) => todo.completed === true
       );
       setToDoIsDone(doneTodos);
       setMessage(todos.message);
@@ -41,12 +41,12 @@ function App(): JSX.Element {
   function todoInput(): JSX.Element {
     async function handleAddNewTask() {
       if (NewTask.length === 0 || DueDate.length === 0) {
-        alert("please enter both task and duedate!");
+        alert("Please enter both task and duedate :)");
       } else {
         const response = await axios.post(baseUrl + "/todoapp", {
           task: NewTask,
-          dueDate: DueDate,
-          status: "InProgress",
+          duedate: DueDate,
+          completed: false,
         });
         console.log(response.data);
       }
@@ -85,29 +85,30 @@ function App(): JSX.Element {
   }
 
   function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
-    const [isDone, setIsDone] = useState<boolean>();
+    const [isDone, setIsDone] = useState<boolean>(
+      props.todo.completed === true ? true : false
+    );
 
-    async function handleDoneCheckbox() {
+    async function handleDoneCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
+      setIsDone(e.target.checked);
+
       const todoId = props.todo.id;
-      if (props.todo.status === "InProgress") {
-        props.todo["status"] = "Done";
-        setIsDone(true);
+      if (isDone === false) {
+        props.todo["completed"] = true;
       } else {
-        props.todo["status"] = "InProgress";
-        setIsDone(false);
+        props.todo["completed"] = false;
       }
 
       const response = await axios.patch(`${baseUrl}/todoapp/${todoId}`, {
-        status: props.todo.status,
+        completed: props.todo.completed,
       });
       console.log(
         response.data +
           "ID:" +
           todoId +
           " has been updated to " +
-          props.todo.status
+          props.todo.completed
       );
-
       fetchAllTodos("/todoapp");
     }
 
@@ -131,7 +132,7 @@ function App(): JSX.Element {
           />
         </div>
         <hr className="divider"></hr>
-        <h4 className="taskdueDate">Due date: {props.todo.dueDate}</h4>
+        <h4 className="taskdueDate">Due date: {props.todo.duedate}</h4>
         <button type="button" className="bin" onClick={handleDelete}>
           {" "}
           Bin{" "}
