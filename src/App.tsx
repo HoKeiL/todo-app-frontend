@@ -26,7 +26,7 @@ function App(): JSX.Element {
       );
       setToDoIsDone(doneTodos);
       setMessage(todos.message);
-      console.log("fetched data");
+      console.log("fetched all todos");
     } catch (err) {
       console.log(err);
       setMessage(`${(err as Error).name}: ${(err as Error).message}`);
@@ -48,12 +48,11 @@ function App(): JSX.Element {
           duedate: DueDate,
           completed: false,
         });
-        console.log(response.data);
+        fetchAllTodos("/todoapp");
+        setNewTask("");
+        setDueDate("");
+        console.log("New todo has been added " + response.data);
       }
-
-      fetchAllTodos("/todoapp");
-      setNewTask("");
-      setDueDate("");
     }
 
     const today = moment(new Date()).format("YYYY-MM-DD");
