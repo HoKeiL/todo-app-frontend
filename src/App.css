@@ -94,25 +94,33 @@ body {
   );
   margin: 8px;
   padding: 8px;
+  width: 400px;
+  height: 200px;
 }
 
 .taskDescription {
   /* border: 3px solid #fbf9f9; */
   text-align: left;
   display: inline-block;
+  vertical-align: top;
+  margin-top: 5%;
   margin-left: 10%;
   padding: 4px;
   width: 200px;
-  height: auto;
+  height: 80px;
+  word-wrap: break-word;
 }
 
 .isDoneGroup {
   /* border: 3px solid #fbf9f9; */
   display: inline-block;
+  vertical-align: top;
+  margin-top: 5%;
   text-align: center;
-  margin-left: 10%;
+  padding-top: 8px;
+  margin-left: 5%;
   width: 100px;
-  height: auto;
+  height: 80px;
 }
 
 .isDone {
@@ -120,11 +128,13 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 8px;
 }
 
 .isDoneButton {
   /* border: 3px solid #fbf9f9; */
   display: block;
+  margin-top: 16px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -132,6 +142,7 @@ body {
 .divider {
   color: rgba(251, 249, 249, 0.7);
   width: 85%;
+  margin-top: 4px;
 }
 
 .taskdueDate {
@@ -139,12 +150,14 @@ body {
   width: 200px;
   display: inline-block;
   margin-left: 10%;
+  margin-top: 2%;
 }
 
 .bin {
   /* border: 3px solid #fbf9f9; */
   display: inline-block;
-  margin-left: 19%;
+  margin-top: 2%;
+  margin-left: 14.5%;
   border-radius: 4px;
   background: #ffc148;
   color: #232d42;
