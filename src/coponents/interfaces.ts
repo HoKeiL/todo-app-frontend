@@ -2,7 +2,7 @@ export interface todoCardProp {
   id: number;
   task: string;
   dueDate: string;
-  status: "Done" | "InProgress";
+  completed: boolean;
 }
 
 export interface ToDoViewProp {

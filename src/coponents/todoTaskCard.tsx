@@ -15,13 +15,13 @@ export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
     setIsDone(isChecked);
     const todoId = props.todo.id;
     if (isChecked === true) {
-      props.todo["status"] = "Done";
+      props.todo["completed"] = true;
     } else {
-      props.todo["status"] = "InProgress";
+      props.todo["completed"] = false;
     }
     const response = await axios.patch(
-      `http://localhost:4000/todoapp/${todoId}`,
-      { status: props.todo.status }
+      `${apiBaseURL}/todoapp/${todoId}`,
+      { status: props.todo.completed }
     );
     console.log(response.data + "has been updated");
   }
