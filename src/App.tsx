@@ -48,12 +48,11 @@ function App(): JSX.Element {
           duedate: DueDate,
           completed: false,
         });
+        fetchAllTodos("/todoapp");
+        setNewTask("");
+        setDueDate("");
         console.log("New todo has been added " + response.data);
       }
-
-      fetchAllTodos("/todoapp");
-      setNewTask("");
-      setDueDate("");
     }
 
     const today = moment(new Date()).format("YYYY-MM-DD");
