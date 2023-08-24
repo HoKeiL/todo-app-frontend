@@ -67,6 +67,7 @@ function App(): JSX.Element {
           onChange={(event) => {
             setNewTask(event.target.value);
           }}
+          maxLength={50}
         />
         <input
           className="dueDateInput"
@@ -131,8 +132,11 @@ function App(): JSX.Element {
             onChange={handleDoneCheckbox}
           />
         </div>
+
         <hr className="divider"></hr>
-        <h4 className="taskdueDate">Due date: {props.todo.duedate}</h4>
+        <h4 className="taskdueDate">
+          Due date: {moment(props.todo.duedate).format("DD-MM-YYYY")}
+        </h4>
         <button type="button" className="bin" onClick={handleDelete}>
           {" "}
           Bin{" "}
@@ -164,7 +168,7 @@ function App(): JSX.Element {
       </div>
       <footer className="footer">
         <p>
-          My frontend repo{" "}
+          Check out my frontend repo{" "}
           <a
             className="repoLinks"
             href="https://github.com/HoKeiL/todo-app-frontend"
