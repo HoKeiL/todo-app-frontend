@@ -43,7 +43,7 @@ function App(): JSX.Element {
       if (NewTask.length === 0 || DueDate.length === 0) {
         alert("Please enter both task and duedate :)");
       } else {
-        const response = await axios.post(baseUrl + "/todoapp", {
+        const response = await axios.post(`${baseUrl}/todoapp`, {
           task: NewTask,
           duedate: DueDate,
           completed: false,
