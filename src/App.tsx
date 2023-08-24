@@ -104,10 +104,10 @@ function App(): JSX.Element {
       });
       console.log(
         response.data +
-        "ID:" +
-        todoId +
-        " has been updated to " +
-        props.todo.completed
+          "ID:" +
+          todoId +
+          " has been updated to " +
+          props.todo.completed
       );
       fetchAllTodos("/todoapp");
     }
