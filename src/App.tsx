@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import moment from "moment";
 import { baseUrl } from "./utils/baseUrl";
 // import { DisplayTodoTask } from "./coponents/todoTaskCard";
-import { todoCardProp, ToDoViewProp } from "./coponents/interfaces";
+import { todoViewProp, todoCardProp } from "./coponents/interfaces";
+import { TodoInput } from "./coponents/TodoInput";
+import { TodoHeader } from "./coponents/TodoHeader";
+import { TodoFooter } from "./coponents/TodoFooter";
+import moment from "moment";
 import "./App.css";
 
 function App(): JSX.Element {
-  const [message, setMessage] = useState<string>();
+  const [Message, setMessage] = useState<string>();
   const [NewTask, setNewTask] = useState<string>("");
   const [DueDate, setDueDate] = useState<string>("");
   const [TodosInProgress, setTodosInProgress] = useState<todoCardProp[]>([]);
   const [ToDoIsDone, setToDoIsDone] = useState<todoCardProp[]>([]);
 
-  async function fetchAllTodos(endpoint: string) {
+  const fetchAllTodos = async (endpoint: string) => {
     try {
       const response = await axios.get(`${baseUrl}${endpoint}`);
-      const todos = await response.data;
+      const todos = response.data;
       const inProgressTodos = todos.filter(
         (todo: todoCardProp) => todo.completed === false
       );
@@ -31,65 +34,37 @@ function App(): JSX.Element {
       console.log(err);
       setMessage(`${(err as Error).name}: ${(err as Error).message}`);
     }
-  }
+  };
 
   useEffect(() => {
     // populate data on first load
     fetchAllTodos("/todoapp");
   }, []);
 
-  function todoInput(): JSX.Element {
-    async function handleAddNewTask() {
-      if (NewTask.length === 0 || DueDate.length === 0) {
-        alert("Please enter both task and duedate :)");
-      } else {
-        const response = await axios.post(`${baseUrl}/todoapp`, {
-          task: NewTask,
-          duedate: DueDate,
-          completed: false,
-        });
-        fetchAllTodos("/todoapp");
-        setNewTask("");
-        setDueDate("");
-        console.log("New todo has been added " + response.data);
-      }
+  const handleAddNewTask = async () => {
+    if (NewTask.length === 0 || DueDate.length === 0) {
+      alert("Please enter both task and duedate :)");
+    } else {
+      const response = await axios.post(`${baseUrl}/todoapp`, {
+        task: NewTask,
+        duedate: DueDate,
+        completed: false,
+      });
+      fetchAllTodos("/todoapp");
+      setNewTask("");
+      setDueDate("");
+      console.log("New todo has been added " + response.data.task);
     }
+  };
 
-    const today = moment(new Date()).format("YYYY-MM-DD");
-
-    return (
-      <div className="innerInputBarSection">
-        <input
-          className="inputBar"
-          placeholder="Add new task..."
-          value={NewTask}
-          onChange={(event) => {
-            setNewTask(event.target.value);
-          }}
-          maxLength={50}
-        />
-        <input
-          className="dueDateInput"
-          type="date"
-          value={DueDate}
-          min={today}
-          onChange={(event) => {
-            setDueDate(event.target.value);
-          }}
-        />
-        <button className="button" onClick={handleAddNewTask}>
-          +
-        </button>
-      </div>
-    );
-  }
-
-  function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
+  function DisplayTodoTask(props: todoViewProp): JSX.Element {
     const [isDone, setIsDone] = useState<boolean>(
       props.todo.completed === true ? true : false
     );
 
-    async function handleDoneCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
+    const handleDoneCheckbox = async (
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
       setIsDone(e.target.checked);
 
       const todoId = props.todo.id;
@@ -110,14 +85,14 @@ function App(): JSX.Element {
           props.todo.completed
       );
       fetchAllTodos("/todoapp");
-    }
+    };
 
-    async function handleDelete() {
+    const handleDelete = async () => {
       const todoId = props.todo.id;
       const response = await axios.delete(`${baseUrl}/todoapp/${todoId}`);
       console.log(response.data + "ID:" + todoId + " has been deleted");
       fetchAllTodos("/todoapp");
-    }
+    };
 
     return (
       <div className="todoTask">
@@ -147,10 +122,20 @@ function App(): JSX.Element {
   return (
     <>
       <div>
-        <h1 className="title">My ToDo App</h1>
-        {message && <p>{message}</p>}
+        <TodoHeader />
+        {Message && <p>{Message}</p>}
       </div>
-      <div className="inputBarSection">{todoInput()}</div>
+      <div className="inputBarSection">
+        <TodoInput
+          NewTask={NewTask}
+          setNewTask={setNewTask}
+          DueDate={DueDate}
+          setDueDate={setDueDate}
+        />
+        <button className="button" onClick={handleAddNewTask}>
+          +
+        </button>
+      </div>
       <div className="container">
         <div className="inProgressList">
           <h2 className="inProgressTitle">-- In Progress tasks --</h2>
@@ -165,28 +150,7 @@ function App(): JSX.Element {
           ))}
         </div>
       </div>
-      <footer className="footer">
-        <p>
-          Check out my frontend repo{" "}
-          <a
-            className="repoLinks"
-            href="https://github.com/HoKeiL/todo-app-frontend"
-            target="_blank"
-            rel="noreferrer"
-          >
-            here
-          </a>{" "}
-          and my backend repo{" "}
-          <a
-            className="repoLinks"
-            href="https://github.com/HoKeiL/todo-app-backend"
-            target="_blank"
-            rel="noreferrer"
-          >
-            here
-          </a>{" "}
-        </p>
-      </footer>
+      <TodoFooter />
     </>
   );
 }
