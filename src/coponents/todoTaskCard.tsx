@@ -1,13 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
-import { todoCardProp } from "./interfaces";
-import apiBaseURL from "../App";
+import { todoViewProp } from "./interfaces";
+import { baseUrl } from "../utils/baseUrl";
+import moment from "moment";
 
-interface ToDoViewProp {
-  todo: todoCardProp;
-}
-
-export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
+export function DisplayTodoTask(props: todoViewProp): JSX.Element {
   const [isDone, setIsDone] = useState<boolean>(false); //need state to remember previous state
 
   async function handleDoneCheckbox() {
@@ -19,7 +16,7 @@ export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
     } else {
       props.todo["completed"] = false;
     }
-    const response = await axios.patch(`${apiBaseURL}/todoapp/${todoId}`, {
+    const response = await axios.patch(`${baseUrl}/todoapp/${todoId}`, {
       status: props.todo.completed,
     });
     console.log(response.data + "has been updated");
@@ -27,7 +24,7 @@ export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
 
   async function handleDelete() {
     const todoId = props.todo.id;
-    const response = await axios.delete(`${apiBaseURL}/todoapp/${todoId}`);
+    const response = await axios.delete(`${baseUrl}/todoapp/${todoId}`);
     console.log(response.data + "ID:" + todoId + " has been deleted");
   }
 
@@ -44,7 +41,9 @@ export function DisplayTodoTask(props: ToDoViewProp): JSX.Element {
         />
       </div>
       <hr className="divider"></hr>
-      <h4 className="taskdueDate">Due date: {props.todo.duedate}</h4>
+      <h4 className="taskdueDate">
+        Due date: {moment(props.todo.duedate).format("DD-MM-YYYY")}
+      </h4>
       <button type="button" className="bin" onClick={handleDelete}>
         {" "}
         bin{" "}
