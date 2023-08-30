@@ -23,6 +23,7 @@ body {
 }
 
 .button {
+  /* border: 3px solid #fbf9f9; */
   display: inline-block;
   position: relative;
   text-align: center;
@@ -38,6 +39,7 @@ body {
 }
 
 .inputBar {
+  /* border: 3px solid #fbf9f9; */
   display: inline-block;
   position: relative;
   border-radius: 4px;
@@ -52,6 +54,7 @@ body {
 }
 
 .dueDateInput {
+  /* border: 3px solid #fbf9f9; */
   display: inline-block;
   position: relative;
   border-radius: 4px;
@@ -68,7 +71,8 @@ body {
 .container {
   /* border: 3px solid #fbf9f9; */
   margin-top: 16px;
-  padding: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
   justify-content: center;
   display: flex;
 }

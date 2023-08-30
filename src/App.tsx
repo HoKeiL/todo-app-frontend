@@ -16,7 +16,7 @@ function App(): JSX.Element {
   const [TodosInProgress, setTodosInProgress] = useState<todoCardProp[]>([]);
   const [ToDoIsDone, setToDoIsDone] = useState<todoCardProp[]>([]);
 
-  const fetchAllTodos = async (endpoint: string) => {
+  async function fetchAllTodos(endpoint: string) {
     try {
       const response = await axios.get(`${baseUrl}${endpoint}`);
       const todos = response.data;
@@ -34,7 +34,7 @@ function App(): JSX.Element {
       console.log(err);
       setMessage(`${(err as Error).name}: ${(err as Error).message}`);
     }
-  };
+  }
 
   useEffect(() => {
     // populate data on first load

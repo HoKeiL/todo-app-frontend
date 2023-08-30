@@ -9,7 +9,7 @@ export function TodoInput({
 }: todoStateProp): JSX.Element {
   const today = moment(new Date()).format("YYYY-MM-DD");
   return (
-    <div className="innerInputBarSection">
+    <div>
       <input
         className="inputBar"
         placeholder="Add new task..."
